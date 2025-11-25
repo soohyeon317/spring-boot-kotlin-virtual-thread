@@ -1,0 +1,11 @@
+server:
+  port: 5000
+
+spring:
+  application:
+    name: spring-boot-kotlin-virtual-thread
+  profiles:
+    active: local
+  threads:
+    virtual:
+      enabled: true

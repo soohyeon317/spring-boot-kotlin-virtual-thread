@@ -1,0 +1,40 @@
+package com.example.springbootkotlinvirtualthread.infrastructure.persistence.jpa.authtoken
+
+import com.example.springbootkotlinvirtualthread.domain.authtoken.AuthToken
+import com.example.springbootkotlinvirtualthread.domain.authtoken.AuthTokenRepository
+import org.springframework.stereotype.Repository
+
+@Repository
+class AuthTokenRepositoryImpl(
+    private val springDataAuthTokenRepository: SpringDataAuthTokenRepository
+) : AuthTokenRepository {
+
+    override fun save(authToken: AuthToken, willDelete: Boolean?): AuthToken {
+        return springDataAuthTokenRepository.save(
+            AuthTokenEntity(authToken, willDelete)
+        ).toAuthToken()
+    }
+
+    override fun findTopByAccountIdAndDeletedAtIsNullOrderByIdDesc(accountId: Long): AuthToken? {
+        return springDataAuthTokenRepository.findTopByAccountIdAndDeletedAtIsNullOrderByIdDesc(accountId)?.toAuthToken()
+    }
+
+    override fun findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(accessToken: String): AuthToken? {
+        return springDataAuthTokenRepository.findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(accessToken)?.toAuthToken()
+    }
+
+    override fun findTopByAccountIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(accountId: Long, accessToken: String): AuthToken? {
+        return springDataAuthTokenRepository.findTopByAccountIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(
+            accountId = accountId,
+            accessToken = accessToken
+        )?.toAuthToken()
+    }
+
+    override fun findTopByAccountIdOrderByIdDesc(accountId: Long): AuthToken? {
+        return springDataAuthTokenRepository.findTopByAccountIdOrderByIdDesc(accountId)?.toAuthToken()
+    }
+
+    override fun findAllByAccountIdAndDeletedAtIsNull(accountId: Long): List<AuthToken> {
+        return springDataAuthTokenRepository.findAllByAccountIdAndDeletedAtIsNull(accountId).map { it.toAuthToken() }
+    }
+}

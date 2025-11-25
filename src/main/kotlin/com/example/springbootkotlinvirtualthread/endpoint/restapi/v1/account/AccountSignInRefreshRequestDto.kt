@@ -1,0 +1,13 @@
+package com.example.springbootkotlinvirtualthread.endpoint.restapi.v1.account
+
+import jakarta.validation.constraints.NotBlank
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class AccountSignInRefreshRequestDto(
+
+    @field:NotBlank(message = "NotBlank")
+    val accessToken: String? = null,
+    @field:NotBlank(message = "NotBlank")
+    val refreshToken: String? = null,
+)
