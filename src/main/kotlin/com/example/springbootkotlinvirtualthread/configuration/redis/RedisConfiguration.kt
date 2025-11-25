@@ -2,7 +2,6 @@ package com.example.springbootkotlinvirtualthread.configuration.redis
 
 import org.redisson.Redisson
 import org.redisson.api.RedissonClient
-import org.redisson.api.RedissonReactiveClient
 import org.redisson.client.codec.StringCodec
 import org.redisson.config.Config
 import org.redisson.config.TransportMode
@@ -38,10 +37,5 @@ class RedisConfiguration(
             .setDnsMonitoringInterval(redisConfigProperties.singleServerConfig.dnsMonitoringInterval)
 
         return Redisson.create(config)
-    }
-
-    @Bean
-    fun redissonReactiveClient(redissonClient: RedissonClient): RedissonReactiveClient {
-        return redissonClient.reactive()
     }
 }

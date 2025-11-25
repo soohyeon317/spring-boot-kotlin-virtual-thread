@@ -6,17 +6,15 @@ import com.example.springbootkotlinvirtualthread.exception.ErrorCode
 import com.example.springbootkotlinvirtualthread.exception.MethodRuntimeTimeoutException
 import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.reactor.awaitSingle
-import kotlinx.coroutines.reactor.awaitSingleOrNull
 import kotlinx.coroutines.withContext
-import org.redisson.api.RedissonReactiveClient
+import org.redisson.api.RedissonClient
 import org.springframework.stereotype.Component
 import java.security.SecureRandom
 import java.util.concurrent.TimeUnit
 
 @Component
 class DistributedLockUtil(
-    private val redissonReactiveClient: RedissonReactiveClient,
+    private val redissonClient: RedissonClient,
     private val transactionUtil: TransactionUtil
 ) {
 
@@ -25,9 +23,9 @@ class DistributedLockUtil(
     suspend fun <T> run(targetName: String, id: String, block: suspend () -> T): T {
         val uniqueId = random.nextLong()
         val lockName = "$targetName:$id"
-        val lock = redissonReactiveClient.getLock(lockName)
+        val lock = redissonClient.getLock(lockName)
 
-        val available = lock.tryLock(TRY_LOCK_TIMEOUT, LEASE_TIMEOUT, TimeUnit.SECONDS, uniqueId).awaitSingle()
+        val available = lock.tryLockAsync(TRY_LOCK_TIMEOUT, LEASE_TIMEOUT, TimeUnit.SECONDS, uniqueId).get()
 
         if (!available) {
             throw DistributedLockAcquisitionFailureException(
@@ -52,7 +50,7 @@ class DistributedLockUtil(
             }
         } finally {
             withContext(NonCancellable) {
-                lock.unlock(uniqueId).awaitSingleOrNull()
+                lock.unlockAsync(uniqueId).get()
                 logger().info("Distributed Lock released. (LockName=$lockName, UniqueId=$uniqueId, TryLockTimeout=$TRY_LOCK_TIMEOUT, LeaseTimeout=$LEASE_TIMEOUT, TargetMethodTimeout=$TARGET_METHOD_TIMEOUT)")
             }
         }
