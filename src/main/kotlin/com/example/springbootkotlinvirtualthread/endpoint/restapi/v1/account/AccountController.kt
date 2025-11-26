@@ -5,7 +5,7 @@ import com.example.springbootkotlinvirtualthread.configuration.annotation.Functi
 import com.example.springbootkotlinvirtualthread.configuration.authentication.AuthenticationTokenManager
 import com.example.springbootkotlinvirtualthread.domain.account.AccountForResponse
 import com.example.springbootkotlinvirtualthread.domain.account.LocaleInfoDefault
-import com.example.springbootkotlinvirtualthread.domain.common.HeaderName
+import com.example.springbootkotlinvirtualthread.domain.common.HeaderKey
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
@@ -27,9 +27,9 @@ class AccountController(
         httpServletRequest: HttpServletRequest,
         @RequestBody @Valid request: AccountSignUpSignInRequestDto
     ): AccountSignUpSignInResponseDto {
-        val languageCode = httpServletRequest.getHeader(HeaderName.LANGUAGE_CODE) ?: LocaleInfoDefault.LANGUAGE_CODE.default
-        val countryCode = httpServletRequest.getHeader(HeaderName.COUNTRY_CODE) ?: LocaleInfoDefault.COUNTRY_CODE.default
-        val timeZoneCode = httpServletRequest.getHeader(HeaderName.TIME_ZONE_CODE) ?: LocaleInfoDefault.TIME_ZONE_CODE.default
+        val languageCode = httpServletRequest.getHeader(HeaderKey.LANGUAGE_CODE) ?: LocaleInfoDefault.LANGUAGE_CODE.default
+        val countryCode = httpServletRequest.getHeader(HeaderKey.COUNTRY_CODE) ?: LocaleInfoDefault.COUNTRY_CODE.default
+        val timeZoneCode = httpServletRequest.getHeader(HeaderKey.TIME_ZONE_CODE) ?: LocaleInfoDefault.TIME_ZONE_CODE.default
 
         return AccountSignUpSignInResponseDto(
             accountSignUpSignInUseCase.signUpSignIn(
@@ -52,9 +52,9 @@ class AccountController(
         httpServletRequest: HttpServletRequest,
     ): AccountForResponse {
         val accountId = authenticationTokenManager.getAccountId()
-        val languageCode = httpServletRequest.getHeader(HeaderName.LANGUAGE_CODE) ?: LocaleInfoDefault.LANGUAGE_CODE.default
-        val countryCode = httpServletRequest.getHeader(HeaderName.COUNTRY_CODE) ?: LocaleInfoDefault.COUNTRY_CODE.default
-        val timeZoneCode = httpServletRequest.getHeader(HeaderName.TIME_ZONE_CODE) ?: LocaleInfoDefault.TIME_ZONE_CODE.default
+        val languageCode = httpServletRequest.getHeader(HeaderKey.LANGUAGE_CODE) ?: LocaleInfoDefault.LANGUAGE_CODE.default
+        val countryCode = httpServletRequest.getHeader(HeaderKey.COUNTRY_CODE) ?: LocaleInfoDefault.COUNTRY_CODE.default
+        val timeZoneCode = httpServletRequest.getHeader(HeaderKey.TIME_ZONE_CODE) ?: LocaleInfoDefault.TIME_ZONE_CODE.default
 
         return accountDetailGetUseCase.getAccountDetail(
             command = AccountDetailGetCommand.GetAccountDetail(
