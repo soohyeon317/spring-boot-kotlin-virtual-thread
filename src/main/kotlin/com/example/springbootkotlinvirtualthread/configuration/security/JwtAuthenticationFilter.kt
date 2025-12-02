@@ -11,7 +11,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
-import org.springframework.util.StringUtils
 import org.springframework.web.filter.OncePerRequestFilter
 
 @Component
@@ -25,10 +24,13 @@ class JwtAuthenticationFilter(
         filterChain: FilterChain
     ) {
         try {
-            val jwt = getJwtFromRequest(request)
+            val jwt = AuthenticationToken.getJwtFromRequest(request = request)
 
-            if (jwt != null && authenticationTokenManager.validateToken(token = jwt, tokenType = AuthenticationTokenType.ACCESS)) {
-                val accountId = authenticationTokenManager.getAccountIdFromToken(jwt)
+            if (jwt != null &&
+                authenticationTokenManager.isSavedToken(jwt) &&
+                authenticationTokenManager.validateToken(token = jwt, tokenType = AuthenticationTokenType.ACCESS))
+            {
+                val accountId = authenticationTokenManager.getAccountIdFromToken(token = jwt)
                 val authentication = UsernamePasswordAuthenticationToken(
                     accountId,
                     null,
@@ -44,18 +46,5 @@ class JwtAuthenticationFilter(
         }
 
         filterChain.doFilter(request, response)
-    }
-
-    /**
-     * Request에서 JWT 토큰 추출
-     */
-    private fun getJwtFromRequest(request: HttpServletRequest): String? {
-        val bearerToken = request.getHeader(AuthenticationToken.AUTHORIZATION_HEADER)
-
-        return if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(AuthenticationToken.BEARER_PREFIX)) {
-            bearerToken.substring(AuthenticationToken.BEARER_PREFIX.length)
-        } else {
-            null
-        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.springbootkotlinvirtualthread.endpoint.restapi.v1.account
 
 import com.example.springbootkotlinvirtualthread.application.account.*
 import com.example.springbootkotlinvirtualthread.configuration.annotation.FunctionExecutionBeforeLog
+import com.example.springbootkotlinvirtualthread.configuration.authentication.AuthenticationToken
 import com.example.springbootkotlinvirtualthread.configuration.authentication.AuthenticationTokenManager
 import com.example.springbootkotlinvirtualthread.domain.account.AccountForResponse
 import com.example.springbootkotlinvirtualthread.domain.account.LocaleInfoDefault
@@ -17,6 +18,7 @@ class AccountController(
     private val accountSignUpSignInUseCase: AccountSignUpSignInUseCase,
     private val accountDetailGetUseCase: AccountDetailGetUseCase,
     private val accountSignInRefreshUseCase: AccountSignInRefreshUseCase,
+    private val accountSignOutUseCase: AccountSignOutUseCase,
     private val authenticationTokenManager: AuthenticationTokenManager,
 ) {
 
@@ -78,6 +80,19 @@ class AccountController(
                     accessToken = request.accessToken!!,
                     refreshToken = request.refreshToken!!,
                 )
+            )
+        )
+    }
+
+    @PostMapping("/sign-out")
+    @ResponseStatus(HttpStatus.OK)
+    suspend fun signOut(
+        httpServletRequest: HttpServletRequest,
+    ) {
+        val accessToken = AuthenticationToken.getJwtFromRequest(request = httpServletRequest)!!
+        val accountId = authenticationTokenManager.getAccountIdFromToken(token = accessToken)
+        accountSignOutUseCase.signOut(
+            command = AccountSignOutCommand.SignOut(accountId = accountId, accessToken = accessToken
             )
         )
     }

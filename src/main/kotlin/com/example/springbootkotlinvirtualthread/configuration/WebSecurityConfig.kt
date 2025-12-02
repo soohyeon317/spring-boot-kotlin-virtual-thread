@@ -30,6 +30,7 @@ class WebSecurityConfig(
             // accounts
             "/api/v1/accounts/sign-up/sign-in",
             "/api/v1/accounts/sign-in/refresh",
+            "/api/v1/accounts/sign-out",
 
             // Health Check
             "/health"
@@ -46,10 +47,10 @@ class WebSecurityConfig(
                     .requestMatchers(*authenticatedUrls.toTypedArray()).permitAll()
                     .anyRequest().authenticated()
             }
+            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .exceptionHandling {
                 it.authenticationEntryPoint(jwtAuthenticationEntryPoint)
             }
-            .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
 
         return http.build()
     }

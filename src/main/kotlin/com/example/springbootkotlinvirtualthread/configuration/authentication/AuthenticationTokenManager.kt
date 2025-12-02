@@ -1,5 +1,6 @@
 package com.example.springbootkotlinvirtualthread.configuration.authentication
 
+import com.example.springbootkotlinvirtualthread.domain.authtoken.AuthTokenRepository
 import com.example.springbootkotlinvirtualthread.exception.ErrorCode
 import com.example.springbootkotlinvirtualthread.exception.UnAuthorizedException
 import io.jsonwebtoken.ExpiredJwtException
@@ -11,8 +12,17 @@ import org.springframework.stereotype.Component
 
 @Component
 class AuthenticationTokenManager(
+    private val authTokenRepository: AuthTokenRepository,
     private val jwtUtil: JwtUtil,
 ) {
+
+    /**
+     * 저장된 토큰인지 확인
+     */
+    fun isSavedToken(accessToken: String): Boolean =
+        authTokenRepository.findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(
+            accessToken = accessToken
+        ) != null
 
     /**
      * Token 생성
@@ -69,6 +79,11 @@ class AuthenticationTokenManager(
         }
     }
 
-    fun getAccountId(): Long = SecurityContextHolder.getContext().authentication!!.principal.toString().toLong()
+    /**
+     * 인증된 사용자의 Account ID 추출
+     */
+    fun getAccountId(): Long {
+        return SecurityContextHolder.getContext().authentication!!.principal.toString().toLong()
+    }
 }
 
