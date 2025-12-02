@@ -11,7 +11,7 @@ const val ZONE_ID_OF_UTC = "UTC"
 const val DEFAULT_DATE_DELIMITER = "-"
 const val DEFAULT_TIME_DELIMITER = ":"
 const val DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss"
-const val DEFAULT_UTC_DATE_TIME_FORMAT = "YYYY-MM-dd'T'HH:mm:ss'Z'"
+const val DEFAULT_UTC_DATE_TIME_FORMAT = "YYYY-MM-dd'T'HH:mm:ss.SSS'Z'"
 const val DEFAULT_DATE_FORMAT = "yyyy-MM-dd"
 const val DEFAULT_HOUR_MINUTE_TIME_FORMAT = "HH:mm"
 
@@ -37,8 +37,8 @@ fun LocalDateTime.toLocalizedDateTime(
     return zdt.format(formatter).parseLocalDateTime()
 }
 
-fun LocalDateTime.serializedUTCDateTime(pattern: String? = DEFAULT_DATE_TIME_FORMAT): String =
-    this.serializedLocalDateTime(pattern = pattern, newZoneId = ZoneId.of(ZONE_ID_OF_UTC))
+fun LocalDateTime.serializedUTCDateTime(): String =
+    this.serializedLocalDateTime(pattern = DEFAULT_UTC_DATE_TIME_FORMAT, newZoneId = ZoneId.of(ZONE_ID_OF_UTC))
 
 fun String.parseLocalDateTime(
     pattern: String? = DEFAULT_DATE_TIME_FORMAT
