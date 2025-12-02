@@ -85,6 +85,7 @@ class AccountController(
         )
     }
 
+    @FunctionExecutionBeforeLog
     @PostMapping("/sign-out")
     @ResponseStatus(HttpStatus.OK)
     fun signOut(
@@ -98,6 +99,7 @@ class AccountController(
         )
     }
 
+    @FunctionExecutionBeforeLog
     @PostMapping("/withdraw")
     @ResponseStatus(HttpStatus.OK)
     fun withdraw() {
