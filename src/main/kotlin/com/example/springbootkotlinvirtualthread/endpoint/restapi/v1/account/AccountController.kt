@@ -19,6 +19,7 @@ class AccountController(
     private val accountDetailGetUseCase: AccountDetailGetUseCase,
     private val accountSignInRefreshUseCase: AccountSignInRefreshUseCase,
     private val accountSignOutUseCase: AccountSignOutUseCase,
+    private val accountWithdrawUseCase: AccountWithdrawUseCase,
     private val authenticationTokenManager: AuthenticationTokenManager,
 ) {
 
@@ -71,7 +72,7 @@ class AccountController(
     @FunctionExecutionBeforeLog
     @PostMapping("/sign-in/refresh")
     @ResponseStatus(HttpStatus.OK)
-    suspend fun refreshSignIn(
+    fun refreshSignIn(
         @RequestBody @Valid request: AccountSignInRefreshRequestDto
     ): AccountSignInRefreshResponseDto {
         return AccountSignInRefreshResponseDto(
@@ -86,7 +87,7 @@ class AccountController(
 
     @PostMapping("/sign-out")
     @ResponseStatus(HttpStatus.OK)
-    suspend fun signOut(
+    fun signOut(
         httpServletRequest: HttpServletRequest,
     ) {
         val accessToken = AuthenticationToken.getJwtFromRequest(request = httpServletRequest)!!
@@ -94,6 +95,15 @@ class AccountController(
         accountSignOutUseCase.signOut(
             command = AccountSignOutCommand.SignOut(accountId = accountId, accessToken = accessToken
             )
+        )
+    }
+
+    @PostMapping("/withdraw")
+    @ResponseStatus(HttpStatus.OK)
+    fun withdraw() {
+        val accountId = authenticationTokenManager.getAccountId()
+        accountWithdrawUseCase.withdraw(
+            command = AccountWithdrawCommand.Withdraw(accountId = accountId)
         )
     }
 }

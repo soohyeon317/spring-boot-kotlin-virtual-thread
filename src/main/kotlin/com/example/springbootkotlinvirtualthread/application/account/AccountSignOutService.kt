@@ -13,7 +13,7 @@ class AccountSignOutService(
 ): AccountSignOutUseCase {
 
     @Transactional(rollbackFor = [Throwable::class])
-    override suspend fun signOut(command: AccountSignOutCommand.SignOut) {
+    override fun signOut(command: AccountSignOutCommand.SignOut) {
         try {
             val authToken = authTokenRepository.findTopByAccountIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(
                 accountId = command.accountId,

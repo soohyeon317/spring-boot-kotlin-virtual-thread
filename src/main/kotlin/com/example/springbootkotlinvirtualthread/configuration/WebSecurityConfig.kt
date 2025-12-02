@@ -30,7 +30,6 @@ class WebSecurityConfig(
             // accounts
             "/api/v1/accounts/sign-up/sign-in",
             "/api/v1/accounts/sign-in/refresh",
-            "/api/v1/accounts/sign-out",
 
             // Health Check
             "/health"

@@ -19,7 +19,7 @@ class AccountSignInRefreshService(
 ): AccountSignInRefreshUseCase {
 
     @Transactional(rollbackFor = [Throwable::class])
-    override suspend fun refreshSignIn(command: AccountSignInRefreshCommand.RefreshSignIn): AuthToken {
+    override fun refreshSignIn(command: AccountSignInRefreshCommand.RefreshSignIn): AuthToken {
         try {
             // 해당 AccessToken 정보와 일치하는 AuthToken 데이터 가져오기
             val authToken = authTokenRepository.findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(command.accessToken)

@@ -4,5 +4,5 @@ import com.example.springbootkotlinvirtualthread.domain.authtoken.AuthToken
 
 fun interface AccountSignInRefreshUseCase {
 
-    suspend fun refreshSignIn(command: AccountSignInRefreshCommand.RefreshSignIn): AuthToken
+    fun refreshSignIn(command: AccountSignInRefreshCommand.RefreshSignIn): AuthToken
 }
