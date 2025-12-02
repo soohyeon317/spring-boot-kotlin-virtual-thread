@@ -4,7 +4,6 @@ import com.example.springbootkotlinvirtualthread.configuration.security.JwtAuthe
 import com.example.springbootkotlinvirtualthread.configuration.security.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.core.env.Environment
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
@@ -23,12 +22,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 class WebSecurityConfig(
     private val jwtAuthenticationFilter: JwtAuthenticationFilter,
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
-    private val environment: Environment,
 ) {
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
-        val authenticatedUrls = mutableListOf(
+        val authenticatedUrls = listOf(
             // accounts
             "/api/v1/accounts/sign-up/sign-in",
             "/api/v1/accounts/sign-in/refresh",
@@ -36,14 +34,6 @@ class WebSecurityConfig(
             // Health Check
             "/health"
         )
-
-        if (environment.activeProfiles.firstOrNull() != "prod") {
-            // Swagger
-            authenticatedUrls.add("/v3/api-docs/**")
-            authenticatedUrls.add("/swagger-ui/**")
-            authenticatedUrls.add("/swagger-ui.html")
-            authenticatedUrls.add("/webjars/**")
-        }
 
         http
             .cors { it.configurationSource(corsConfigurationSource()) }
