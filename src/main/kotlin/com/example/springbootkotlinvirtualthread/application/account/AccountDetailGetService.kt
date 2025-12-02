@@ -15,9 +15,6 @@ class AccountDetailGetService(
     @Transactional(rollbackFor = [Throwable::class])
     override fun getAccountDetail(command: AccountDetailGetCommand.GetAccountDetail): AccountForResponse {
         try {
-            /**
-             * 참고: 커플 연결 끊김을 당한 경우에는 커플 연결 끊김 확인 필요 여부를 클라이언트에서 체크하기로 한 상황이기 때문에 서버에서 오류를 반환하지 않음.
-             */
             // 기존 계정 데이터 조회
             var myAccount = accountRepository.findTopByIdAndDeletedAtIsNull(id = command.accountId)
                 ?: throw AccountNotFoundException(ErrorCode.MY_ACCOUNT_NOT_FOUND)
