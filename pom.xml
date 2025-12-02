@@ -104,10 +104,10 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Redisson (core library - manual config for Spring Boot 4.0 compatibility) -->
+        <!-- Redisson -->
         <dependency>
             <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
+            <artifactId>redisson-spring-boot-starter</artifactId>
             <version>3.52.0</version>
         </dependency>
 
