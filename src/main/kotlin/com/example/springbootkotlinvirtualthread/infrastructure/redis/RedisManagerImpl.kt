@@ -9,7 +9,7 @@ class RedisManagerImpl(
     private val redissonClient: RedissonClient
 ): RedisManager {
 
-    override suspend fun rollbackForStringValue(previousKeyValues: Map<String, String?>) {
+    override fun rollbackForStringValue(previousKeyValues: Map<String, String?>) {
         for (previousKeyValue in previousKeyValues.entries) {
             if (previousKeyValue.value == null) {
                 deleteKeyForStringValue(previousKeyValue.key)
@@ -25,7 +25,7 @@ class RedisManagerImpl(
         }
     }
 
-    override suspend fun rollbackForListValue(previousKeyValues: Map<String, List<String>?>) {
+    override fun rollbackForListValue(previousKeyValues: Map<String, List<String>?>) {
         for (previousKeyValue in previousKeyValues.entries) {
             deleteKeyForListValue(previousKeyValue.key)
             val values = previousKeyValue.value
@@ -38,7 +38,7 @@ class RedisManagerImpl(
         }
     }
 
-    override suspend fun deleteKeyForListValue(key: String): Boolean {
+    override fun deleteKeyForListValue(key: String): Boolean {
         val bucket = redissonClient.getList<String>(key)
         val hasBucket = bucket.isExists
         return if (!hasBucket) {
@@ -48,7 +48,7 @@ class RedisManagerImpl(
         }
     }
 
-    private suspend fun deleteKeyForStringValue(key: String): Boolean {
+    private fun deleteKeyForStringValue(key: String): Boolean {
         val bucket = redissonClient.getBucket<String>(key)
         val hasBucket = bucket.isExists
         return if (!hasBucket) {
