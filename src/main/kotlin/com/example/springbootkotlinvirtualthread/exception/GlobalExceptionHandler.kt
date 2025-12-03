@@ -105,12 +105,21 @@ class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response)
     }
 
+    @ExceptionHandler(MethodExecutionTimeoutException::class)
+    fun handleMethodExecutionTimeoutException(ex: MethodExecutionTimeoutException): ResponseEntity<ErrorResponse> {
+        val response = ErrorResponse(
+            code = ex.code,
+            message = ex.message ?: ex.code.message
+        )
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response)
+    }
+
     @ExceptionHandler(Exception::class)
     fun handleGeneralException(ex: Exception): ResponseEntity<ErrorResponse> {
         ex.printStackTrace()
         val response = ErrorResponse(
-            code = ErrorCode.INPUT_INVALID,
-            message = ex.message ?: "An unexpected error occurred"
+            code = ErrorCode.INTERNAL_SERVER_ERROR,
+            message = ex.message ?: ErrorCode.INTERNAL_SERVER_ERROR.message
         )
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response)
     }
