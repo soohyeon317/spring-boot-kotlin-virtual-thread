@@ -29,5 +29,6 @@ enum class ErrorCode(val message: String) {
 
     // INTERNAL SERVER ERROR
     DISTRIBUTED_LOCK_ACQUISITION_FAILURE("Fail to acquire the lock."),
-    METHOD_RUNTIME_TIMEOUT("Target method timeout occurred."),
+    METHOD_RUN_TIMEOUT("Method run timeout occurred."),
+    INTERNAL_SERVER_ERROR("Internal server error occurred.");
 }
