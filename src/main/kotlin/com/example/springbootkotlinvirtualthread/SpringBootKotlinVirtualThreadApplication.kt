@@ -1,13 +1,12 @@
 package com.example.springbootkotlinvirtualthread
 
-import org.redisson.spring.starter.RedissonAutoConfigurationV2
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 import reactor.core.publisher.Hooks
 import java.util.*
 
-@SpringBootApplication(exclude = [RedissonAutoConfigurationV2::class])
+@SpringBootApplication
 @ConfigurationPropertiesScan
 class SpringBootKotlinVirtualThreadApplication
 
