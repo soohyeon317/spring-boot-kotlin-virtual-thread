@@ -114,3 +114,31 @@ fun String.toLocalDate(
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(pattern!!)
     return LocalDate.parse(this, formatter)
 }
+
+fun getDurationDaysBetween(startDate: LocalDate, endDate: LocalDate): Long {
+    val defaultValue = 1L
+    return if (startDate.isEqualOrBefore(endDate)) {
+        defaultValue.plus(Duration.between(startDate.atStartOfDay(), endDate.atStartOfDay()).toDays())
+    } else {
+        defaultValue.plus(Duration.between(endDate.atStartOfDay(), startDate.atStartOfDay()).toDays())
+    }
+}
+
+fun getDurationDaysBetween(startDate: String, endDate: String): Long {
+    val defaultValue = 1L
+    val typedStartDate: LocalDate
+    val typedEndDate: LocalDate
+
+    try {
+        typedStartDate = LocalDate.parse(startDate)
+        typedEndDate = LocalDate.parse(endDate)
+    } catch (_: Throwable) {
+        throw InputInvalidException(ErrorCode.DATE_FORMAT_INVALID)
+    }
+
+    return if (typedStartDate.isEqualOrBefore(typedEndDate)) {
+        defaultValue.plus(Duration.between(typedStartDate.atStartOfDay(), typedEndDate.atStartOfDay()).toDays())
+    } else {
+        defaultValue.plus(Duration.between(typedEndDate.atStartOfDay(), typedStartDate.atStartOfDay()).toDays())
+    }
+}

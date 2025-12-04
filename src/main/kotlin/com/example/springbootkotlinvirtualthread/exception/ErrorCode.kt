@@ -4,6 +4,7 @@ enum class ErrorCode(val message: String) {
 
     // INPUT
     INPUT_INVALID("Input is invalid."),
+    DATE_FORMAT_INVALID("Date format is invalid."),
 
     // HEADER
     DEVICE_MODEL_NAME_HEADER_REQUIRED("Device model name header is required."),
