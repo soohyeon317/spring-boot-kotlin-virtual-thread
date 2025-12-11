@@ -17,5 +17,7 @@ data class AccountSignUpSignInRequestDto(
 
     @field:Email(message = "Should be an email format.")
     @field:NotBlank(message = "NotBlank")
-    val email: String? = null
+    val email: String? = null,
+
+    val appPushToken: String? = null,
 )

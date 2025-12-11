@@ -26,7 +26,9 @@ enum class ErrorCode(val message: String) {
     // AUTH_TOKEN
     ACCESS_TOKEN_NOT_FOUND("AccessToken is not found."),
     REFRESH_TOKEN_NOT_MATCHED("RefreshToken is not matched."),
-    AUTH_TOKEN_OF_MY_ACCOUNT_NOT_FOUND("My account's authToken is not found."),
+
+    // APP_USE_ENVIRONMENT
+    APP_USE_ENVIRONMENT_NOT_FOUND("App use environment is not found."),
 
     // INTERNAL SERVER ERROR
     DISTRIBUTED_LOCK_ACQUISITION_FAILURE("Fail to acquire the lock."),

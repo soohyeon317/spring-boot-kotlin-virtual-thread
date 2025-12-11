@@ -2,6 +2,7 @@ package com.example.springbootkotlinvirtualthread.application.account
 
 import com.example.springbootkotlinvirtualthread.configuration.logger.logger
 import com.example.springbootkotlinvirtualthread.domain.account.AccountRepository
+import com.example.springbootkotlinvirtualthread.domain.appuseenvironment.AppUseEnvironmentRepository
 import com.example.springbootkotlinvirtualthread.domain.authtoken.AuthTokenRepository
 import com.example.springbootkotlinvirtualthread.exception.AccountNotFoundException
 import com.example.springbootkotlinvirtualthread.exception.ErrorCode
@@ -13,6 +14,7 @@ import java.time.LocalDateTime
 class AccountWithdrawService(
     private val accountRepository: AccountRepository,
     private val authTokenRepository: AuthTokenRepository,
+    private val appUseEnvironmentRepository: AppUseEnvironmentRepository,
 ): AccountWithdrawUseCase {
 
     @Transactional(rollbackFor = [Throwable::class])
@@ -28,6 +30,14 @@ class AccountWithdrawService(
             인증 토큰 목록 삭제
              */
             authTokenRepository.deleteAllByAccountIdAndDeletedAtIsNull(
+                accountId = myAccountId,
+                deletedAt = currentLocalDateTime,
+            )
+
+            /*
+            앱 사용 환경 목록 삭제
+             */
+            appUseEnvironmentRepository.deleteAllByAccountIdAndDeletedAtIsNull(
                 accountId = myAccountId,
                 deletedAt = currentLocalDateTime,
             )
