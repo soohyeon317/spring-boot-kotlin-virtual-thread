@@ -16,10 +16,6 @@ class AuthTokenRepositoryImpl(
         ).toAuthToken()
     }
 
-    override fun findTopByAccountIdAndDeletedAtIsNullOrderByIdDesc(accountId: Long): AuthToken? {
-        return springDataAuthTokenRepository.findTopByAccountIdAndDeletedAtIsNullOrderByIdDesc(accountId)?.toAuthToken()
-    }
-
     override fun findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(accessToken: String): AuthToken? {
         return springDataAuthTokenRepository.findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(accessToken)?.toAuthToken()
     }
@@ -29,10 +25,6 @@ class AuthTokenRepositoryImpl(
             accountId = accountId,
             accessToken = accessToken
         )?.toAuthToken()
-    }
-
-    override fun findTopByAccountIdOrderByIdDesc(accountId: Long): AuthToken? {
-        return springDataAuthTokenRepository.findTopByAccountIdOrderByIdDesc(accountId)?.toAuthToken()
     }
 
     override fun deleteAllByAccountIdAndDeletedAtIsNull(

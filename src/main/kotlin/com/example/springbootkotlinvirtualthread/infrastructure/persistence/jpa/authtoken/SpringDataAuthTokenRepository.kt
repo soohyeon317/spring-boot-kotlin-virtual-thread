@@ -7,10 +7,8 @@ import java.time.LocalDateTime
 
 interface SpringDataAuthTokenRepository : JpaRepository<AuthTokenEntity, Long> {
 
-    fun findTopByAccountIdAndDeletedAtIsNullOrderByIdDesc(accountId: Long): AuthTokenEntity?
     fun findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(accessToken: String): AuthTokenEntity?
     fun findTopByAccountIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(accountId: Long, accessToken: String): AuthTokenEntity?
-    fun findTopByAccountIdOrderByIdDesc(accountId: Long): AuthTokenEntity?
 
     @Modifying
     @Query("""

@@ -18,7 +18,6 @@ class AccountSignUpSignInService(
 ) : AccountSignUpSignInUseCase {
 
     // 회원가입 및 로그인 통합 처리
-    // 멀티 로그인 비허용
     @Transactional(rollbackFor = [Throwable::class])
     override fun signUpSignIn(command: AccountSignUpSignInCommand.SignUpSignIn): Pair<AuthToken, Boolean> {
         try {
@@ -63,12 +62,6 @@ class AccountSignUpSignInService(
             /*
             인증 토큰 생성 및 응답
              */
-            // 최근 authToken 조회
-            val authToken = authTokenRepository.findTopByAccountIdAndDeletedAtIsNullOrderByIdDesc(accountId = myAccountId)
-            // 이미 존재하면, 해당 authToken 삭제
-            if (authToken != null) {
-                authTokenRepository.save(authToken = authToken, willDelete = true)
-            }
             // 새로운 authToken 저장
             val accessToken = jwtUtil.generateJwt(accountId = myAccountId, tokenType = AuthenticationTokenType.ACCESS)
             val refreshToken = jwtUtil.generateJwt(accountId = myAccountId, tokenType = AuthenticationTokenType.REFRESH)
