@@ -3,6 +3,7 @@ package com.example.springbootkotlinvirtualthread.infrastructure.persistence.jpa
 import com.example.springbootkotlinvirtualthread.domain.authtoken.AuthToken
 import com.example.springbootkotlinvirtualthread.domain.authtoken.AuthTokenRepository
 import org.springframework.stereotype.Repository
+import java.time.LocalDateTime
 
 @Repository
 class AuthTokenRepositoryImpl(
@@ -34,7 +35,13 @@ class AuthTokenRepositoryImpl(
         return springDataAuthTokenRepository.findTopByAccountIdOrderByIdDesc(accountId)?.toAuthToken()
     }
 
-    override fun findAllByAccountIdAndDeletedAtIsNull(accountId: Long): List<AuthToken> {
-        return springDataAuthTokenRepository.findAllByAccountIdAndDeletedAtIsNull(accountId).map { it.toAuthToken() }
+    override fun deleteAllByAccountIdAndDeletedAtIsNull(
+        accountId: Long,
+        deletedAt: LocalDateTime,
+    ) {
+        return springDataAuthTokenRepository.deleteAllByAccountIdAndDeletedAtIsNull(
+            accountId = accountId,
+            deletedAt = deletedAt
+        )
     }
 }
