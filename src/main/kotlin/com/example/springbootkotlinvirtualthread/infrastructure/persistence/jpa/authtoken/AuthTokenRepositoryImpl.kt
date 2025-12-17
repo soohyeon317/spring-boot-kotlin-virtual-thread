@@ -10,9 +10,15 @@ class AuthTokenRepositoryImpl(
     private val springDataAuthTokenRepository: SpringDataAuthTokenRepository
 ) : AuthTokenRepository {
 
-    override fun save(authToken: AuthToken, willDelete: Boolean?): AuthToken {
+    override fun save(
+        authToken: AuthToken,
+        willDelete: Boolean
+    ): AuthToken {
         return springDataAuthTokenRepository.save(
-            AuthTokenEntity(authToken, willDelete)
+            AuthTokenEntity(
+                authToken = authToken,
+                willDelete = willDelete
+            )
         ).toAuthToken()
     }
 

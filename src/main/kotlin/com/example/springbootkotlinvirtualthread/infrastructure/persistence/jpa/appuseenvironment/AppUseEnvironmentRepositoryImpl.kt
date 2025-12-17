@@ -12,7 +12,7 @@ class AppUseEnvironmentRepositoryImpl(
 
     override fun save(
         appUseEnvironment: AppUseEnvironment,
-        willDelete: Boolean?,
+        willDelete: Boolean,
     ): AppUseEnvironment {
         return springDataAppUseEnvironmentRepository.save(
             AppUseEnvironmentEntity(

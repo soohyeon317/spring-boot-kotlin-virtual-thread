@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 interface AuthTokenRepository {
 
-    fun save(authToken: AuthToken, willDelete: Boolean? = null): AuthToken
+    fun save(authToken: AuthToken, willDelete: Boolean = false): AuthToken
     fun findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(accessToken: String): AuthToken?
     fun findTopByAccountIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(accountId: Long, accessToken: String): AuthToken?
 

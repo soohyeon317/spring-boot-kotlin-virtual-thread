@@ -20,7 +20,7 @@ data class AccountEntity (
     val deletedAt: LocalDateTime?,
 ) {
 
-    constructor(account: Account, willDelete: Boolean? = null) :
+    constructor(account: Account, willDelete: Boolean = false) :
             this(
                 id = account.id,
                 thirdPartyAuthType = account.thirdPartyAuthType,
@@ -35,7 +35,7 @@ data class AccountEntity (
                     account.createdAt ?: LocalDateTime.now()
                 },
                 updatedAt = if (account.id != null) {
-                    if (willDelete == true) {
+                    if (willDelete) {
                         account.updatedAt
                     } else {
                         LocalDateTime.now()
@@ -43,7 +43,7 @@ data class AccountEntity (
                 } else {
                     null
                 },
-                deletedAt = if (willDelete != null && willDelete == true) {
+                deletedAt = if (willDelete) {
                     LocalDateTime.now()
                 } else {
                     null

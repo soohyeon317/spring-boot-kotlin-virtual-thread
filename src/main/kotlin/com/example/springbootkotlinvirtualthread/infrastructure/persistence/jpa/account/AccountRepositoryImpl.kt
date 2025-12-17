@@ -14,7 +14,7 @@ class AccountRepositoryImpl(
 
     override fun save(
         account: Account,
-        willDelete: Boolean?,
+        willDelete: Boolean,
     ): Account {
         return springDataAccountRepository.save(
             AccountEntity(

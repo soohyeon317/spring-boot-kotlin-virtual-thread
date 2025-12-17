@@ -6,7 +6,7 @@ interface AppUseEnvironmentRepository {
 
     fun save(
         appUseEnvironment: AppUseEnvironment,
-        willDelete: Boolean? = null
+        willDelete: Boolean = false
     ): AppUseEnvironment
 
     fun findTopByAccountIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
