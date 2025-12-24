@@ -1,10 +1,8 @@
-package com.example.springbootkotlinvirtualthread.persistence.jpa.account
+package com.example.springbootkotlinvirtualthread.infrastructure.persistence.jpa.account
 
 import com.example.springbootkotlinvirtualthread.domain.account.Account
 import com.example.springbootkotlinvirtualthread.domain.account.AccountRepository
 import com.example.springbootkotlinvirtualthread.domain.account.ThirdPartyAuthType
-import com.example.springbootkotlinvirtualthread.infrastructure.persistence.jpa.account.AccountEntity
-import com.example.springbootkotlinvirtualthread.infrastructure.persistence.jpa.account.SpringDataAccountRepository
 import org.springframework.stereotype.Repository
 
 @Repository
