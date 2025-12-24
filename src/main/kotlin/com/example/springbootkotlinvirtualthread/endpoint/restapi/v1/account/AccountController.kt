@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1/accounts")
 class AccountController(
     private val accountSignUpSignInUseCase: AccountSignUpSignInUseCase,
-    private val accountDetailGetUseCase: AccountDetailGetUseCase,
+    private val accountDetailsGetUseCase: AccountDetailsGetUseCase,
     private val accountSignInRefreshUseCase: AccountSignInRefreshUseCase,
     private val accountSignOutUseCase: AccountSignOutUseCase,
     private val accountWithdrawUseCase: AccountWithdrawUseCase,
@@ -76,9 +76,9 @@ class AccountController(
     }
 
     @FunctionExecutionBeforeLog
-    @GetMapping("/detail")
+    @GetMapping("/details")
     @ResponseStatus(HttpStatus.OK)
-    fun getAccountDetail(
+    fun getAccountDetails(
         httpServletRequest: HttpServletRequest,
     ): AccountForResponse {
         val accountId = authenticationTokenManager.getAccountId()
@@ -86,8 +86,8 @@ class AccountController(
         val countryCode = httpServletRequest.getHeader(HeaderKey.COUNTRY_CODE) ?: LocaleInfoDefault.COUNTRY_CODE.default
         val timeZoneCode = httpServletRequest.getHeader(HeaderKey.TIME_ZONE_CODE) ?: LocaleInfoDefault.TIME_ZONE_CODE.default
 
-        return accountDetailGetUseCase.getAccountDetail(
-            command = AccountDetailGetCommand.GetAccountDetail(
+        return accountDetailsGetUseCase.getAccountDetails(
+            command = AccountDetailsGetCommand.GetAccountDetails(
                 accountId = accountId,
                 languageCode = languageCode,
                 countryCode = countryCode,
