@@ -9,7 +9,5 @@ data class AccountSignInRefreshRequestDto(
     @field:NotBlank(message = "NotBlank")
     val accessToken: String? = null,
     @field:NotBlank(message = "NotBlank")
-    val refreshToken: String? = null,
-
-    val appPushToken: String? = null,
+    val refreshToken: String? = null
 )

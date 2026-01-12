@@ -106,7 +106,7 @@ class AccountController(
         val deviceModelNameHeader = httpServletRequest.getHeader(HeaderKey.DEVICE_MODEL_NAME)
         val appOsHeader = httpServletRequest.getHeader(HeaderKey.APP_OS)
         val appVersionHeader = httpServletRequest.getHeader(HeaderKey.APP_VERSION)
-        val appPushToken = request.appPushToken
+        val appPushTokenHeader = httpServletRequest.getHeader(HeaderKey.APP_PUSH_TOKEN)
 
         when {
             deviceModelNameHeader.isNullOrEmpty() -> {
@@ -132,7 +132,7 @@ class AccountController(
                             deviceModelName = deviceModelNameHeader,
                             appOs = appOs,
                             appVersion = appVersionHeader,
-                            appPushToken = appPushToken
+                            appPushToken = appPushTokenHeader
                         )
                     )
                 )
