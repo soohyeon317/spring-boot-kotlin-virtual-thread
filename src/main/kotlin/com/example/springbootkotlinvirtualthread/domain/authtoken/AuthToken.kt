@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 data class AuthToken(
     val id: Long?,
-    val accountId: Long,
+    val memberId: Long,
     val accessToken: String,
     val refreshToken: String,
     val createdAt: LocalDateTime?,
@@ -12,10 +12,10 @@ data class AuthToken(
     val deletedAt: LocalDateTime?
 ) {
 
-    constructor(accountId: Long, accessToken: String, refreshToken: String) :
+    constructor(memberId: Long, accessToken: String, refreshToken: String) :
             this(
                 id = null,
-                accountId = accountId,
+                memberId = memberId,
                 accessToken = accessToken,
                 refreshToken = refreshToken,
                 createdAt = null,

@@ -17,8 +17,8 @@ class AppPushTokenUpdateService(
         try {
             val myAccountId = command.accountId
 
-            val existingAppUseEnvironment = appUseEnvironmentRepository.findTopByAccountIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
-                accountId = myAccountId,
+            val existingAppUseEnvironment = appUseEnvironmentRepository.findTopByMemberIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
+                memberId = myAccountId,
                 deviceModelName = command.deviceModelName,
             ) ?: throw AppUseEnvironmentNotFoundException(code = ErrorCode.APP_USE_ENVIRONMENT_NOT_FOUND)
 

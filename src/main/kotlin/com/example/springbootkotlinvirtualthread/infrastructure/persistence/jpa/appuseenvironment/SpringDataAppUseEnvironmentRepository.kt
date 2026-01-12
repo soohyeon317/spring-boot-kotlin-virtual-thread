@@ -7,34 +7,38 @@ import java.time.LocalDateTime
 
 interface SpringDataAppUseEnvironmentRepository : JpaRepository<AppUseEnvironmentEntity, Long> {
 
-    fun findTopByAccountIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
-        accountId: Long,
+    fun findTopByMemberIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
+        memberId: Long,
         deviceModelName: String,
     ): AppUseEnvironmentEntity?
 
     @Modifying
-    @Query("""
+    @Query(
+        """
         UPDATE AppUseEnvironmentEntity aue
         SET aue.deletedAt = :deletedAt
-        WHERE aue.accountId = :accountId
+        WHERE aue.memberId = :memberId
             AND aue.deviceModelName = :deviceModelName
             AND aue.deletedAt IS NULL
-    """)
-    fun deleteAllByAccountIdAndDeviceModelNameAndDeletedAtIsNull(
-        accountId: Long,
+    """
+    )
+    fun deleteAllByMemberIdAndDeviceModelNameAndDeletedAtIsNull(
+        memberId: Long,
         deviceModelName: String,
         deletedAt: LocalDateTime,
     )
 
     @Modifying
-    @Query("""
+    @Query(
+        """
         UPDATE AppUseEnvironmentEntity aue
         SET aue.deletedAt = :deletedAt
-        WHERE aue.accountId = :accountId
+        WHERE aue.memberId = :memberId
             AND aue.deletedAt IS NULL
-    """)
-    fun deleteAllByAccountIdAndDeletedAtIsNull(
-        accountId: Long,
+    """
+    )
+    fun deleteAllByMemberIdAndDeletedAtIsNull(
+        memberId: Long,
         deletedAt: LocalDateTime,
     )
 }

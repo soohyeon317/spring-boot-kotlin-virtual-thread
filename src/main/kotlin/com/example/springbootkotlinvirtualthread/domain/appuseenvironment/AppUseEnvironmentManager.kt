@@ -8,20 +8,20 @@ class AppUseEnvironmentManager(
 ) {
 
     fun create(
-        accountId: Long,
+        memberId: Long,
         deviceModelName: String,
         appOs: AppOS,
         appVersion: String,
         appPushToken: String?,
     ): AppUseEnvironment {
         val existingAppUseEnvironment =
-            appUseEnvironmentRepository.findTopByAccountIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
-                accountId = accountId,
+            appUseEnvironmentRepository.findTopByMemberIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
+                memberId = memberId,
                 deviceModelName = deviceModelName
             )
         var newAppUseEnvironment = AppUseEnvironment(
             id = null,
-            accountId = accountId,
+            memberId = memberId,
             deviceModelName = deviceModelName,
             appOs = appOs,
             appVersion = appVersion,

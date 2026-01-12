@@ -22,34 +22,34 @@ class AppUseEnvironmentRepositoryImpl(
         ).toAppUseEnvironment()
     }
 
-    override fun findTopByAccountIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
-        accountId: Long,
+    override fun findTopByMemberIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
+        memberId: Long,
         deviceModelName: String,
     ): AppUseEnvironment? {
-        return springDataAppUseEnvironmentRepository.findTopByAccountIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
-            accountId = accountId,
+        return springDataAppUseEnvironmentRepository.findTopByMemberIdAndDeviceModelNameAndDeletedAtIsNullOrderByIdDesc(
+            memberId = memberId,
             deviceModelName = deviceModelName
         )?.toAppUseEnvironment()
     }
 
-    override fun deleteAllByAccountIdAndDeviceModelNameAndDeletedAtIsNull(
-        accountId: Long,
+    override fun deleteAllByMemberIdAndDeviceModelNameAndDeletedAtIsNull(
+        memberId: Long,
         deviceModelName: String,
         deletedAt: LocalDateTime,
     ) {
-        return springDataAppUseEnvironmentRepository.deleteAllByAccountIdAndDeviceModelNameAndDeletedAtIsNull(
-            accountId = accountId,
+        return springDataAppUseEnvironmentRepository.deleteAllByMemberIdAndDeviceModelNameAndDeletedAtIsNull(
+            memberId = memberId,
             deviceModelName = deviceModelName,
             deletedAt = deletedAt
         )
     }
 
-    override fun deleteAllByAccountIdAndDeletedAtIsNull(
-        accountId: Long,
+    override fun deleteAllByMemberIdAndDeletedAtIsNull(
+        memberId: Long,
         deletedAt: LocalDateTime
     ) {
-        springDataAppUseEnvironmentRepository.deleteAllByAccountIdAndDeletedAtIsNull(
-            accountId = accountId,
+        springDataAppUseEnvironmentRepository.deleteAllByMemberIdAndDeletedAtIsNull(
+            memberId = memberId,
             deletedAt = deletedAt
         )
     }

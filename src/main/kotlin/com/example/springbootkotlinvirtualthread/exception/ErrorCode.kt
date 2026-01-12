@@ -10,10 +10,11 @@ enum class ErrorCode(val message: String) {
     DEVICE_MODEL_NAME_HEADER_REQUIRED("Device model name header is required."),
     APP_OS_HEADER_REQUIRED("App OS header is required."),
     APP_VERSION_HEADER_REQUIRED("App version header is required."),
+    APP_PUSH_TOKEN_HEADER_REQUIRED("App push token header is required."),
     APP_OS_HEADER_INVALID("App OS header is invalid."),
 
     // AUTHENTICATION
-    UNAUTHORIZED("Account is unauthorized."),
+    UNAUTHORIZED("Member is unauthorized."),
     ACCESS_FORBIDDEN("Access is forbidden."),
     ACCESS_TOKEN_EXPIRED("AccessToken is expired."),
     REFRESH_TOKEN_EXPIRED("RefreshToken is expired."),
@@ -21,7 +22,7 @@ enum class ErrorCode(val message: String) {
     REFRESH_TOKEN_INVALID("RefreshToken is invalid."),
 
     // ACCOUNT
-    MY_ACCOUNT_NOT_FOUND("My account is not found."),
+    MEMBER_NOT_FOUND("Member is not found."),
 
     // AUTH_TOKEN
     ACCESS_TOKEN_NOT_FOUND("AccessToken is not found."),

@@ -29,7 +29,7 @@ class AuthenticationTokenManager(
      */
     fun generateToken(accountId: Long, tokenType: AuthenticationTokenType): String {
         return jwtUtil.generateJwt(
-            accountId = accountId,
+            memberId = accountId,
             tokenType = tokenType,
         )
     }
@@ -68,21 +68,21 @@ class AuthenticationTokenManager(
     }
 
     /**
-     * Token에서 Account ID 추출
+     * Token에서 Member ID 추출
      */
-    fun getAccountIdFromToken(token: String): Long {
+    fun getMemberIdFromToken(token: String): Long {
         val claims = jwtUtil.parseJwtClaims(token)
-        return when (val accountId = claims[AuthenticationToken.ACCOUNT_ID_CLAIM_KEY]) {
-            is Number -> accountId.toLong()
-            is String -> accountId.toLong()
+        return when (val memberId = claims[AuthenticationToken.MEMBER_ID_CLAIM_KEY]) {
+            is Number -> memberId.toLong()
+            is String -> memberId.toLong()
             else -> throw IllegalArgumentException("Invalid account ID in token")
         }
     }
 
     /**
-     * 인증된 사용자의 Account ID 추출
+     * 인증된 사용자의 Member ID 추출
      */
-    fun getAccountId(): Long {
+    fun getMemberId(): Long {
         return SecurityContextHolder.getContext().authentication!!.principal.toString().toLong()
     }
 }

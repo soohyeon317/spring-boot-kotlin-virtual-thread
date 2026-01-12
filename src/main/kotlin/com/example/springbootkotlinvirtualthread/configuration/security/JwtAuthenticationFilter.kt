@@ -30,7 +30,7 @@ class JwtAuthenticationFilter(
                 authenticationTokenManager.isSavedToken(jwt) &&
                 authenticationTokenManager.validateToken(token = jwt, tokenType = AuthenticationTokenType.ACCESS))
             {
-                val accountId = authenticationTokenManager.getAccountIdFromToken(token = jwt)
+                val accountId = authenticationTokenManager.getMemberIdFromToken(token = jwt)
                 val authentication = UsernamePasswordAuthenticationToken(
                     accountId,
                     null,

@@ -13,14 +13,14 @@ data class AuthenticationToken(
 ) {
 
     constructor(claims: Claims) : this(
-        accountId = claims[ACCOUNT_ID_CLAIM_KEY].toString().toLong(),
+        accountId = claims[MEMBER_ID_CLAIM_KEY].toString().toLong(),
         expiration = claims.expiration.toInstant().toEpochMilli(),
         expirationDate = claims.expiration,
         tokenType = AuthenticationTokenType.valueOf(claims[TOKEN_TYPE_CLAIM_KEY] as String)
     )
 
     companion object {
-        const val ACCOUNT_ID_CLAIM_KEY = "accountId"
+        const val MEMBER_ID_CLAIM_KEY = "memberId"
         const val TOKEN_TYPE_CLAIM_KEY = "tokenType"
         const val AUTHORIZATION_HEADER = "Authorization"
         const val BEARER_PREFIX = "Bearer "

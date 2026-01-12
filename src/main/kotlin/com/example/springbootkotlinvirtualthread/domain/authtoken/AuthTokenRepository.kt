@@ -6,10 +6,10 @@ interface AuthTokenRepository {
 
     fun save(authToken: AuthToken, willDelete: Boolean = false): AuthToken
     fun findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(accessToken: String): AuthToken?
-    fun findTopByAccountIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(accountId: Long, accessToken: String): AuthToken?
+    fun findTopByMemberIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(memberId: Long, accessToken: String): AuthToken?
 
-    fun deleteAllByAccountIdAndDeletedAtIsNull(
-        accountId: Long,
+    fun deleteAllByMemberIdAndDeletedAtIsNull(
+        memberId: Long,
         deletedAt: LocalDateTime,
     )
 }

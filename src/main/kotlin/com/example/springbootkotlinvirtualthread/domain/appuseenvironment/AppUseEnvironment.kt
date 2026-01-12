@@ -4,7 +4,7 @@ import java.time.LocalDateTime
 
 data class AppUseEnvironment (
     val id: Long?,
-    val accountId: Long,
+    val memberId: Long,
     val deviceModelName: String,
     val appOs: AppOS,
     val appVersion: String,

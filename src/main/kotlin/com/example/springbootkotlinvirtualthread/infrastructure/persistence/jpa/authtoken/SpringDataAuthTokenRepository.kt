@@ -8,17 +8,19 @@ import java.time.LocalDateTime
 interface SpringDataAuthTokenRepository : JpaRepository<AuthTokenEntity, Long> {
 
     fun findTopByAccessTokenAndDeletedAtIsNullOrderByIdDesc(accessToken: String): AuthTokenEntity?
-    fun findTopByAccountIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(accountId: Long, accessToken: String): AuthTokenEntity?
+    fun findTopByMemberIdAndAccessTokenAndDeletedAtIsNullOrderByIdDesc(memberId: Long, accessToken: String): AuthTokenEntity?
 
     @Modifying
-    @Query("""
+    @Query(
+        """
         UPDATE AuthTokenEntity at
         SET at.deletedAt = :deletedAt
-        WHERE at.accountId = :accountId
+        WHERE at.memberId = :memberId
             AND at.deletedAt IS NULL
-    """)
-    fun deleteAllByAccountIdAndDeletedAtIsNull(
-        accountId: Long,
+    """
+    )
+    fun deleteAllByMemberIdAndDeletedAtIsNull(
+        memberId: Long,
         deletedAt: LocalDateTime,
     )
 }

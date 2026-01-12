@@ -9,5 +9,6 @@ class HeaderKey {
         const val DEVICE_MODEL_NAME = "Device-Model-Name"
         const val APP_OS = "App-Os"
         const val APP_VERSION = "App-Version"
+        const val APP_PUSH_TOKEN = "App-Push-Token"
     }
 }

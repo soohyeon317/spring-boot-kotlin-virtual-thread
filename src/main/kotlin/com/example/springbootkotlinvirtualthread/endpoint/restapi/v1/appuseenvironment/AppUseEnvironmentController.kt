@@ -8,9 +8,11 @@ import com.example.springbootkotlinvirtualthread.domain.common.HeaderKey
 import com.example.springbootkotlinvirtualthread.exception.ErrorCode
 import com.example.springbootkotlinvirtualthread.exception.HeaderInvalidException
 import jakarta.servlet.http.HttpServletRequest
-import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/app-use-environments")
@@ -23,25 +25,28 @@ class AppUseEnvironmentController(
     @PutMapping("/app-push-token")
     @ResponseStatus(HttpStatus.OK)
     fun updateAppPushToken(
-        httpServletRequest: HttpServletRequest,
-        @RequestBody @Valid request: AppPushTokenUpdateRequestDto
+        httpServletRequest: HttpServletRequest
     ) {
-        val accountId = authenticationTokenManager.getAccountId()
+        val memberId = authenticationTokenManager.getMemberId()
 
         val deviceModelNameHeader = httpServletRequest.getHeader(HeaderKey.DEVICE_MODEL_NAME)
-        val appPushToken = request.appPushToken!!
+        val appPushTokenHeader = httpServletRequest.getHeader(HeaderKey.APP_PUSH_TOKEN)
 
         when {
             deviceModelNameHeader.isNullOrEmpty() -> {
                 throw HeaderInvalidException(code = ErrorCode.DEVICE_MODEL_NAME_HEADER_REQUIRED)
             }
 
+            appPushTokenHeader.isNullOrEmpty() -> {
+                throw HeaderInvalidException(code = ErrorCode.APP_PUSH_TOKEN_HEADER_REQUIRED)
+            }
+
             else -> {
                 appPushTokenUpdateUseCase.updateAppPushToken(
                     command = AppPushTokenUpdateCommand.UpdateAppPushToken(
-                        accountId = accountId,
+                        accountId = memberId,
                         deviceModelName = deviceModelNameHeader,
-                        appPushToken = appPushToken
+                        appPushToken = appPushTokenHeader
                     )
                 )
             }
